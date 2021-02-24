@@ -64,12 +64,6 @@ jobs:
         with:
           path: $GITHUB_WORKSPACE/witness-${{ matrix.browser }}
           key: witness--${{ matrix.browser }}--${{ env.commit-sha }}
-      - name: Turnstyle
-        uses: softprops/turnstyle@a714535c65d622af7010e609960ccf0ea5001e3f # pin@v1
-        with:
-          same-branch-only: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test ${{ matrix.browser }}
         run: node ./test/polyfills/server.js & node ./test/polyfills/remotetest.js
