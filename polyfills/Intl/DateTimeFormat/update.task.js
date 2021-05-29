@@ -43,21 +43,21 @@ function writeFileIfChanged(filePath, newFile) {
 }
 
 var numberFormatLocales = new Set(
-	fs.readdirSync(NumberFormatLocalesPath).filter(function(f)  {
+  fs.readdirSync(NumberFormatLocalesPath).filter(function(f)  {
     return f.endsWith('.js');
-	}).map((f) => {
-		return f.slice(0, f.indexOf('.'));
-	})
+  }).map((f) => {
+    return f.slice(0, f.indexOf('.'));
+  })
 );
 
 function localeDependencies(locale) {
-	const out = [];
+  const out = [];
 
-	if (numberFormatLocales.has(locale)) {
-		out.push(`Intl.NumberFormat.~locale.${locale}`);
-	}
+  if (numberFormatLocales.has(locale)) {
+    out.push(`Intl.NumberFormat.~locale.${locale}`);
+  }
 
-	return out;
+  return out;
 }
 
 var configSource = TOML.parse(
