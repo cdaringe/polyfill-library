@@ -50,14 +50,33 @@ var numberFormatLocales = new Set(
   })
 );
 
-function localeDependencies(locale) {
-  const out = [];
+// https://tc39.es/ecma402/#sec-bestavailablelocale
+function bestAvailableLocale(availableLocales, locale) {
+  let candidate = locale
+  while (true) { // eslint-disable-line no-constant-condition
+    if (availableLocales.has(candidate)) {
+      return candidate
+    }
+    let pos = candidate.lastIndexOf('-')
+    if (!~pos) {
+      return undefined
+    }
+    if (pos >= 2 && candidate[pos - 2] === '-') {
+      pos -= 2
+    }
+    candidate = candidate.slice(0, pos)
+  }
+}
 
-  if (numberFormatLocales.has(locale)) {
-    out.push(`Intl.NumberFormat.~locale.${locale}`);
+function localeDependencies(locale) {
+  const match = bestAvailableLocale(numberFormatLocales, locale);
+  if (!match) {
+    return [];
   }
 
-  return out;
+  return [
+    `Intl.NumberFormat.~locale.${match}`
+  ];
 }
 
 var configSource = TOML.parse(

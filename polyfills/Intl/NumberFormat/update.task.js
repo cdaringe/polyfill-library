@@ -44,20 +44,35 @@ var pluralRulesLocales = new Set(
 	})
 );
 
-function localeDependencies(locale) {
-	const out = [];
-
-	if (pluralRulesLocales.has(locale)) {
-		out.push(`Intl.PluralRules.~locale.${locale}`);
+// https://tc39.es/ecma402/#sec-bestavailablelocale
+function bestAvailableLocale(availableLocales, locale) {
+	let candidate = locale
+	while (true) { // eslint-disable-line no-constant-condition
+		if (availableLocales.has(candidate)) {
+			return candidate
+		}
+		let pos = candidate.lastIndexOf('-')
+		if (!~pos) {
+			return undefined
+		}
+		if (pos >= 2 && candidate[pos - 2] === '-') {
+			pos -= 2
+		}
+		candidate = candidate.slice(0, pos)
 	}
-
-	if (pluralRulesLocales.has(locale.split('-')[0])) {
-		// Plural Rules does not have region specific locales.
-		out.push(`Intl.PluralRules.~locale.${locale.split('-')[0]}`);
-	}
-
-	return out;
 }
+
+function localeDependencies(locale) {
+	const match = bestAvailableLocale(pluralRulesLocales, locale);
+	if (!match) {
+		return [];
+	}
+
+	return [
+		`Intl.PluralRules.~locale.${match}`
+	];
+}
+
 var configSource = TOML.parse(fs.readFileSync(path.join(IntlPolyfillOutput, 'config.toml'), 'utf-8'));
 delete configSource.install;
 

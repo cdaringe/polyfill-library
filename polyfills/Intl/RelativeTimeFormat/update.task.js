@@ -53,20 +53,35 @@ var numberFormatLocales = new Set(
 	})
 );
 
+// https://tc39.es/ecma402/#sec-bestavailablelocale
+function bestAvailableLocale(availableLocales, locale) {
+	let candidate = locale
+	while (true) { // eslint-disable-line no-constant-condition
+		if (availableLocales.has(candidate)) {
+			return candidate
+		}
+		let pos = candidate.lastIndexOf('-')
+		if (!~pos) {
+			return undefined
+		}
+		if (pos >= 2 && candidate[pos - 2] === '-') {
+			pos -= 2
+		}
+		candidate = candidate.slice(0, pos)
+	}
+}
+
 function localeDependencies(locale) {
 	const out = [];
 
-	if (pluralRulesLocales.has(locale)) {
-		out.push(`Intl.PluralRules.~locale.${locale}`);
+	const pluralRulesMatch = bestAvailableLocale(pluralRulesLocales, locale);
+	if (pluralRulesMatch) {
+		out.push(`Intl.PluralRules.~locale.${pluralRulesMatch}`)
 	}
 
-	if (pluralRulesLocales.has(locale.split('-')[0])) {
-		// Plural Rules does not have region specific locales.
-		out.push(`Intl.PluralRules.~locale.${locale.split('-')[0]}`);
-	}
-
-	if (numberFormatLocales.has(locale)) {
-		out.push(`Intl.NumberFormat.~locale.${locale}`);
+	const numberFormatMatch = bestAvailableLocale(numberFormatLocales, locale);
+	if (numberFormatMatch) {
+		out.push(`Intl.NumberFormat.~locale.${numberFormatMatch}`)
 	}
 
 	return out;
