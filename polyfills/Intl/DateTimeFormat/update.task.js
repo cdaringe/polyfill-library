@@ -29,6 +29,7 @@ var LocalesPolyfillOutput = path.resolve(
 );
 var mkdirp = require("mkdirp");
 var TOML = require("@iarna/toml");
+var localeMatcher = require('@formatjs/intl-localematcher');
 
 function writeFileIfChanged(filePath, newFile) {
   if (fs.existsSync(filePath)) {
@@ -50,26 +51,8 @@ var numberFormatLocales = new Set(
   })
 );
 
-// https://tc39.es/ecma402/#sec-bestavailablelocale
-function bestAvailableLocale(availableLocales, locale) {
-  let candidate = locale
-  while (true) { // eslint-disable-line no-constant-condition
-    if (availableLocales.has(candidate)) {
-      return candidate
-    }
-    let pos = candidate.lastIndexOf('-')
-    if (!~pos) {
-      return undefined
-    }
-    if (pos >= 2 && candidate[pos - 2] === '-') {
-      pos -= 2
-    }
-    candidate = candidate.slice(0, pos)
-  }
-}
-
 function localeDependencies(locale) {
-  const match = bestAvailableLocale(numberFormatLocales, locale);
+  const match = localeMatcher.match([locale], Array.from(numberFormatLocales));
   if (!match) {
     return [];
   }
