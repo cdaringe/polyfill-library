@@ -10,58 +10,27 @@ aliases = []
 #    "Object.defineProperty"
 # ]
 dependencies = []
-
-#### Specification Link
-# The url which is where the specification for the feature exists.
-# For example the specification for String.prototype.replaceAll is https://tc39.es/ecma262/#sec-string.prototype.replaceall
-spec = ""
-
-#### Documentation Link
-# The url which is where the documentation for the feature exists, this is usually a link to MDN.
-# For example the documentation for String.prototype.replaceAll is https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll
-docs = ""
+spec = "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element"
+docs = "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details"
 
 #### License
 # The license this code has been given. All code authored within the polyfill-library itself is MIT.
 # Third-party code can use any license which is listed on https://opensource.org/licenses
 license = ""
 
-#### Browser compatibility
-# List what browsers require the polyfill.
-# You can check the related Mozilla Developer Network (MDN) page for the compatibility, they also have their browser compatibility data on GitHub.
-# For example: [MDN nextElementSibling browser support](https://github.com/mdn/browser-compat-data/blob/master/api/NonDocumentTypeChildNode.json#L99-L149)
-# Browsers that can be listed:
-# - android
-# - bb
-# - chrome
-# - edge
-# - edge_mob
-# - firefox
-# - ios_chr
-# - ios_saf
-# - ie
-# - ie_mob
-# - opera
-# - op_mini
-# - safari
-# - firefox_mob
-# - samsung_mob
-# The browser list uses a form of semantic versioning to indicate which browser requires polyfilling.
-# If all versions of a browser require the polyfill you can use the wildcard asterisk (*):
-# For specific versions you can specify a number, for example if a polyfill is required in Internet Explorer 8 and below you can use "<9"
 [browsers]
-android = "*"
+android = "<4"
 bb = "*"
-chrome = "*"
-edge = "*"
-edge_mob = "*"
-firefox = "*"
+chrome = "<12"
+edge = "<79"
+edge_mob = "<79"
+firefox = "<49"
 ios_chr = "*"
-ios_saf = "*"
+ios_saf = "<6"
 ie = "*"
 ie_mob = "*"
-opera = "*"
+opera = "<15"
 op_mini = "*"
-safari = "*"
-firefox_mob = "*"
-samsung_mob = "*"
+safari = "<6"
+firefox_mob = "<49"
+samsung_mob = "<4"
