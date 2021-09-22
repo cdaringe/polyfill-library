@@ -63,50 +63,43 @@ describe("Details", function () {
 		});
 	});
 
-	// it('<summary id="summary"> is focusable', function () {
-	// 	const summary = getElement("summary");
+	it("open property toggles content", function (done) {
+		const element = getElement("details");
+		const summary = getElement("summary");
+		const content = getElement("content");
 
-	// 	if (!detailsElementIsNative) {
-	// 		proclaim.equal(summary.hasAttribute("tabindex"), true);
-	// 		proclaim.equal(summary.hasAttribute("role"), true);
-	// 	}
+		let toggleEventCount = 0;
+		element.addEventListener("toggle", function () {
+			return (toggleEventCount = toggleEventCount + 1);
+		});
 
-	// 	summary.focus();
+		defer(function () {
+			element.open = true;
+			defer(function () {
+				proclaim.equal(toggleEventCount, 1);
+				proclaim.notEqual(content.offsetHeight, 0);
+				proclaim.ok(element.hasAttribute("open"));
+				proclaim.ok(element.open);
+				if (!detailsElementIsNative) {
+					proclaim.equal(summary.getAttribute("aria-expanded"), "true");
+				}
 
-	// 	proclaim.equal(document.activeElement, summary);
-	// });
-
-	// it("open property toggles content", function () {
-	// 	const element = getElement("details");
-	// 	const summary = getElement("summary");
-	// 	const content = getElement("content");
-
-	// 	let toggleEventCount = 0;
-	// 	element.addEventListener("toggle", function () {
-	// 		return (toggleEventCount = toggleEventCount + 1);
-	// 	});
-
-	// 	element.open = true;
-
-	// 	proclaim.equal(toggleEventCount, 1);
-	// 	proclaim.notEqual(content.offsetHeight, 0);
-	// 	proclaim.isTrue(element.hasAttribute("open"));
-	// 	proclaim.isTrue(element.open);
-	// 	if (!detailsElementIsNative) {
-	// 		proclaim.equal(summary.getAttribute("aria-expanded"), "true");
-	// 	}
-
-	// 	element.open = false;
-
-	// 	proclaim.equal(content.offsetHeight, 0);
-	// 	proclaim.notOk(element.hasAttribute("open"));
-	// 	proclaim.notOk(element.open);
-	// 	if (!detailsElementIsNative) {
-	// 		proclaim.equal(summary.getAttribute("aria-expanded"), "false");
-	// 	}
-
-	// 	proclaim.equal(toggleEventCount, 2);
-	// });
+				element.open = false;
+				defer(function () {
+					proclaim.equal(content.offsetHeight, 0);
+					proclaim.notOk(element.hasAttribute("open"));
+					proclaim.notOk(element.open);
+					if (!detailsElementIsNative) {
+						proclaim.equal(summary.getAttribute("aria-expanded"), "false");
+					}
+					defer(function () {
+						proclaim.equal(toggleEventCount, 2);
+						done();
+					});
+				});
+			});
+		});
+	});
 
 	// it("open attribute toggles content", function () {
 	// });
