@@ -1,5 +1,8 @@
 /* global self */
-// Taken from: https://github.com/javan/details-element-polyfill
+/*
+Details Element Polyfill 2.4.0
+Copyright © 2019 Javan Makhmali
+*/
 // eslint-disable-next-line no-unused-vars
 (function (global) {
 	"use strict";
