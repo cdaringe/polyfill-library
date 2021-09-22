@@ -1,23 +1,19 @@
 #### Aliases
-# An alias is another name for the polyfill that can be used when requesting a bundle.
-# For example, the alias `es5` is used to replicate an ECMAScript 5 environment.
 aliases = []
 
 #### Dependencies
-# List any web platform features that you use in your polyfill.
-# For example:
-# dependencies = [
-#    "Object.defineProperty"
-# ]
 dependencies = []
+
+#### Specification Link
 spec = "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element"
+
+#### Documentation Link
 docs = "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details"
 
 #### License
-# The license this code has been given. All code authored within the polyfill-library itself is MIT.
-# Third-party code can use any license which is listed on https://opensource.org/licenses
-license = ""
+license = "MIT"
 
+#### Browser compatibility
 [browsers]
 android = "<4"
 bb = "*"
