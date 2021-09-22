@@ -70,7 +70,7 @@ describe("Details", function () {
 
 		let toggleEventCount = 0;
 		element.addEventListener("toggle", function () {
-			return (toggleEventCount = toggleEventCount + 1);
+			toggleEventCount++;
 		});
 
 		defer(function () {
@@ -101,8 +101,37 @@ describe("Details", function () {
 		});
 	});
 
-	// it("open attribute toggles content", function () {
-	// });
+	it("open attribute toggles content", function (done) {
+		const element = getElement("details");
+		const summary = getElement("summary");
+		const content = getElement("content");
+
+		let toggleEventCount = 0;
+		element.addEventListener("toggle", function () {
+			toggleEventCount++;
+		});
+
+		defer(function () {
+			element.setAttribute("open", "");
+			defer(function () {
+				proclaim.equal(toggleEventCount, 1);
+				proclaim.notEqual(content.offsetHeight, 0);
+				if (!detailsElementIsNative) {
+					proclaim.equal(summary.getAttribute("aria-expanded"), "true");
+				}
+
+				element.removeAttribute("open");
+				defer(function () {
+					proclaim.equal(toggleEventCount, 2);
+					proclaim.equal(content.offsetHeight, 0);
+					if (!detailsElementIsNative) {
+						proclaim.equal(summary.getAttribute("aria-expanded"), "false");
+					}
+					done();
+				});
+			});
+		});
+	});
 
 	// it("click <summary> toggles content", function () {
 	// });
