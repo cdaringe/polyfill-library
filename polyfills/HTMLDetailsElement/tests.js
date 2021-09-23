@@ -39,7 +39,6 @@ describe("Details", function () {
 	it('<summary id="static-summary"> is focusable', function (done) {
 		const summary = getElement("static-summary");
 		defer(function () {
-			// setTimeout() and done() required for IE11
 			if (!detailsElementIsNative) {
 				proclaim.isTrue(summary.hasAttribute("tabindex"));
 				proclaim.isTrue(summary.hasAttribute("role"));
@@ -233,6 +232,7 @@ function getElement(id) {
 	return document.getElementById(id);
 }
 
+// setTimeout() and done() REQUIRED for IE11
 function defer(callback) {
 	setTimeout(callback, 30);
 }
