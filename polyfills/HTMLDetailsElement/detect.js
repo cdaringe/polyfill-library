@@ -1,1 +1,1 @@
-"HTMLDetailsElement " in self;
+"HTMLDetailsElement " in self
