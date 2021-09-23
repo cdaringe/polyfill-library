@@ -30,7 +30,3 @@ op_mini = "*"
 safari = "<6"
 firefox_mob = "<49"
 samsung_mob = "<4"
-
-[install]
-module = "details-element-polyfill"
-paths = [ "dist/details-element-polyfill.js" ]
