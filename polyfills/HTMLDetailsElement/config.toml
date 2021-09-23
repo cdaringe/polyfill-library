@@ -2,7 +2,7 @@
 aliases = []
 
 #### Dependencies
-dependencies = []
+dependencies = ["Array.prototype.forEach", "Object.getOwnPropertyDescriptor", "Object.defineProperties", "Event", "Element.prototype.closest"]
 
 #### Specification Link
 spec = "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element"
@@ -30,3 +30,7 @@ op_mini = "*"
 safari = "<6"
 firefox_mob = "<49"
 samsung_mob = "<4"
+
+[install]
+module = "details-element-polyfill"
+paths = [ "dist/details-element-polyfill.js" ]
