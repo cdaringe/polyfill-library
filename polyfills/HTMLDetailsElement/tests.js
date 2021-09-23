@@ -133,14 +133,100 @@ describe("Details", function () {
 		});
 	});
 
-	// it("click <summary> toggles content", function () {
-	// });
+	it("click <summary> toggles content", function (done) {
+		const element = getElement("details");
+		const summary = getElement("summary");
+		const content = getElement("content");
 
-	// it("click <summary> child toggles content", function () {
-	// });
+		let toggleEventCount = 0;
+		element.addEventListener("toggle", function () {
+			toggleEventCount++;
+		});
 
-	// it("toggle event does not bubble", function () {
-	// });
+		defer(function () {
+			clickElement(summary, function () {
+				proclaim.equal(toggleEventCount, 1);
+				proclaim.notEqual(content.offsetHeight, 0);
+				proclaim.ok(element.hasAttribute("open"));
+				if (!detailsElementIsNative) {
+					proclaim.equal(summary.getAttribute("aria-expanded"), "true");
+				}
+
+				clickElement(summary, function () {
+					proclaim.equal(toggleEventCount, 2);
+					proclaim.equal(content.offsetHeight, 0);
+					proclaim.notOk(element.hasAttribute("open"));
+					if (!detailsElementIsNative) {
+						proclaim.equal(summary.getAttribute("aria-expanded"), "false");
+					}
+					done();
+				});
+			});
+		});
+	});
+
+	it("click <summary> child toggles content", function (done) {
+		const element = getElement("details");
+		const summary = getElement("summary");
+		const content = getElement("content");
+
+		const summaryChild = document.createElement("span");
+		summary.appendChild(summaryChild);
+
+		let toggleEventCount = 0;
+		element.addEventListener("toggle", function () {
+			toggleEventCount++;
+		});
+
+		defer(function () {
+			clickElement(summaryChild, function () {
+				proclaim.equal(toggleEventCount, 1);
+				proclaim.notEqual(content.offsetHeight, 0);
+				proclaim.ok(element.hasAttribute("open"));
+				if (!detailsElementIsNative) {
+					proclaim.equal(summary.getAttribute("aria-expanded"), "true");
+				}
+
+				clickElement(summaryChild, function () {
+					proclaim.equal(toggleEventCount, 2);
+					proclaim.equal(content.offsetHeight, 0);
+					proclaim.notOk(element.hasAttribute("open"));
+					if (!detailsElementIsNative) {
+						proclaim.equal(summary.getAttribute("aria-expanded"), "false");
+					}
+					done();
+				});
+			});
+		});
+	});
+
+	it("toggle event does not bubble", function (done) {
+		const container = getElement("container");
+		const element = getElement("details");
+
+		let toggleEventCount = 0;
+		element.addEventListener("toggle", function () {
+			toggleEventCount++;
+		});
+
+		let bubbledToggleEventCount = 0;
+		container.addEventListener("toggle", function () {
+			bubbledToggleEventCount++;
+		});
+
+		element.open = true;
+		defer(function () {
+			proclaim.equal(toggleEventCount, 1);
+			proclaim.equal(bubbledToggleEventCount, 0);
+
+			element.open = false;
+			defer(function () {
+				proclaim.equal(toggleEventCount, 2);
+				proclaim.equal(bubbledToggleEventCount, 0);
+				done();
+			});
+		});
+	});
 });
 
 function getElement(id) {
