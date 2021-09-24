@@ -3,13 +3,13 @@
 /* globals proclaim */
 // Tests adapted from: https://github.com/javan/details-element-polyfill/blob/main/test/index.js
 
-const STATIC_HTML =
+var STATIC_HTML =
 	"<details id='static-details'>" +
 	"<summary id='static-summary'>Summary</summary>" +
 	"<div id='static-content'>Content</div>" +
 	"</details>";
 
-const DYNAMIC_HTML =
+var DYNAMIC_HTML =
 	"<div id='container'>" +
 	"<details id='details'>" +
 	"<summary id='summary'>Summary</summary>" +
@@ -17,7 +17,7 @@ const DYNAMIC_HTML =
 	"</details>" +
 	"</div>";
 
-const detailsElementIsNative = typeof HTMLDetailsElement != "undefined";
+var detailsElementIsNative = typeof HTMLDetailsElement != "undefined";
 
 describe("Details", function () {
 	before(function () {
@@ -50,7 +50,7 @@ describe("Details", function () {
 	});
 
 	it('<summary id="summary"> is focusable', function (done) {
-		const summary = getElement("summary");
+		var summary = getElement("summary");
 		defer(function () {
 			if (!detailsElementIsNative) {
 				proclaim.isTrue(summary.hasAttribute("tabindex"));
@@ -63,11 +63,11 @@ describe("Details", function () {
 	});
 
 	it("open property toggles content", function (done) {
-		const element = getElement("details");
-		const summary = getElement("summary");
-		const content = getElement("content");
+		var element = getElement("details");
+		var summary = getElement("summary");
+		var content = getElement("content");
 
-		let toggleEventCount = 0;
+		var toggleEventCount = 0;
 		element.addEventListener("toggle", function () {
 			toggleEventCount++;
 		});
@@ -101,11 +101,11 @@ describe("Details", function () {
 	});
 
 	it("open attribute toggles content", function (done) {
-		const element = getElement("details");
-		const summary = getElement("summary");
-		const content = getElement("content");
+		var element = getElement("details");
+		var summary = getElement("summary");
+		var content = getElement("content");
 
-		let toggleEventCount = 0;
+		var toggleEventCount = 0;
 		element.addEventListener("toggle", function () {
 			toggleEventCount++;
 		});
@@ -133,11 +133,11 @@ describe("Details", function () {
 	});
 
 	it("click <summary> toggles content", function (done) {
-		const element = getElement("details");
-		const summary = getElement("summary");
-		const content = getElement("content");
+		var element = getElement("details");
+		var summary = getElement("summary");
+		var content = getElement("content");
 
-		let toggleEventCount = 0;
+		var toggleEventCount = 0;
 		element.addEventListener("toggle", function () {
 			toggleEventCount++;
 		});
@@ -165,14 +165,14 @@ describe("Details", function () {
 	});
 
 	it("click <summary> child toggles content", function (done) {
-		const element = getElement("details");
-		const summary = getElement("summary");
-		const content = getElement("content");
+		var element = getElement("details");
+		var summary = getElement("summary");
+		var content = getElement("content");
 
-		const summaryChild = document.createElement("span");
+		var summaryChild = document.createElement("span");
 		summary.appendChild(summaryChild);
 
-		let toggleEventCount = 0;
+		var toggleEventCount = 0;
 		element.addEventListener("toggle", function () {
 			toggleEventCount++;
 		});
@@ -200,15 +200,15 @@ describe("Details", function () {
 	});
 
 	it("toggle event does not bubble", function (done) {
-		const container = getElement("container");
-		const element = getElement("details");
+		var container = getElement("container");
+		var element = getElement("details");
 
-		let toggleEventCount = 0;
+		var toggleEventCount = 0;
 		element.addEventListener("toggle", function () {
 			toggleEventCount++;
 		});
 
-		let bubbledToggleEventCount = 0;
+		var bubbledToggleEventCount = 0;
 		container.addEventListener("toggle", function () {
 			bubbledToggleEventCount++;
 		});
@@ -238,7 +238,7 @@ function defer(callback) {
 }
 
 function clickElement(element, callback) {
-	let event;
+	var event;
 	try {
 		event = new MouseEvent("click", {
 			view: window,
