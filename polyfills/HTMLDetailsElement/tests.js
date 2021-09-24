@@ -37,7 +37,7 @@ describe("Details", function () {
 	});
 
 	it('<summary id="static-summary"> is focusable', function (done) {
-		const summary = getElement("static-summary");
+		var summary = getElement("static-summary");
 		defer(function () {
 			if (!detailsElementIsNative) {
 				proclaim.isTrue(summary.hasAttribute("tabindex"));
