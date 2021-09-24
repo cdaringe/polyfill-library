@@ -26,3 +26,4 @@ polyfills/ResizeObserver/polyfill.js
 polyfills/AbortController/polyfill.js
 polyfills/smoothscroll/polyfill.js
 polyfills/TextEncoder/polyfill.js
+polyfills/HTMLDetailsElement/polyfill.js
